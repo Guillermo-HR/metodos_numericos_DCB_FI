@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "metodos_numericos_dcb_fi"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name="Guillermo Hernández Ruiz de Esparza", email="guillermo.hre@gmail.com" },
 ]
@@ -20,12 +20,12 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "typing>3.7.4.3",
-  "sympy>1.12",
-  "numpy>1.26.4",
-  "pandas>2.2.1",
-  "ipython>8.18.1",
-  "pathlib>1.0.1"
+  "typing",
+  "sympy",
+  "numpy",
+  "pandas",
+  "ipython",
+  "pathlib"
 ]
 license = {text = "MIT License"}
 keywords = ["Métodos numéricos", "Numerical methods"]
