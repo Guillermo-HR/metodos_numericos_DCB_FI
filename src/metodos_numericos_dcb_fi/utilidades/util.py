@@ -47,8 +47,6 @@ def leerTextos()->None:
     except json.JSONDecodeError:
         raise Exception(f'Error al decodificar el archivo text_{idioma}.json\nFailed to decode the file text_{idioma}.json')
 
-text = leerTextos()
-
 def cambiarIdioma(nuevo_idioma:str)->None:
     '''
     Cambia el idioma actual del programa al idioma especificado.
@@ -72,7 +70,7 @@ def cambiarIdioma(nuevo_idioma:str)->None:
         idioma = nuevo_idioma
         leerTextos()
     else:
-        raise Exception(f'{text["Util"]["Errores"]["idioma"].replace("{1}", idiomas_disponibles).replace("{2}", nuevo_idioma)}')
+        raise Exception(f'{text["Util"]["Errores"]["idioma"].replace("{1}", ", ".join(idiomas_disponibles)).replace("{2}", nuevo_idioma)}')
     
 def cambiarMaxIteraciones(nuevo_max_iteraciones:int)->None:
     '''
@@ -258,6 +256,9 @@ def mostrarPolinomio(a:list[float], variable:str='x', titulo:str='')->None:
     for letra in variable:
         if not (letra in letras_latinas + letras_griegas):
             raise ValueError(f'{text["Util"]["Errores"]["variable"].replace("{1}", variable)}')
+    # Si la variable es mas de 1 caracter poerla entre parentesis en el polinomio 
+    if len(variable)>1:
+        variable = f'({variable})'
     polinomio = ''
     grad = len(a) - 1
     for i, coeficiente in enumerate(a[:-2]):
@@ -270,6 +271,9 @@ def mostrarPolinomio(a:list[float], variable:str='x', titulo:str='')->None:
     if a[-1] != 0:
         sign = '-' if a[-1] < 0 else '+'
         polinomio += f'{sign} {abs(round(a[-1], 3))}'
+    # Eliminar los parentesis que se agregaron para la variable
+    if len(variable)>1:
+        variable = variable[1:-1]
     var = Symbol(f'{variable}')
     polinomio = Poly(polinomio, var)
     if titulo != '': print(titulo)

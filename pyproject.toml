@@ -29,9 +29,6 @@ dependencies = [
 ]
 license = {text = "MIT License"}
 keywords = ["Métodos numéricos", "Numerical methods"]
-classifiers = [
-  "Development Status :: 4 - Beta"
-]
 
 [project.urls]
 Homepage = "https://github.com/Guillermo-HR/metodos_numericos_DCB_FI"
