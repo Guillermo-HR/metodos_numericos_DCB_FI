@@ -18,7 +18,7 @@
         },
         "Entrada":{
             "opcion":"Ingrese la opción deseada: ",
-            "funcion_1":"Reglas para ingresar funciones:\n1.- La funcion debe de depender solo de una variable\n2.- Para ingresar seno escriba sin(argumento)\n3.- Para ingresar el numero de Euler escriba exp(1)\n4.- Para ingresar el numero pi escriba pi",
+            "funcion_1":"Reglas para ingresar funciones:\n1.- La funcion debe de depender solo de una variable\n2.- Para ingresar seno escriba sin(argumento)\n3.- Para ingresar el numero de Euler escriba exp(1)\n4.- Para ingresar el numero pi escriba pi\n5.- La funcion se va a construir en funcion de x.",
             "funcion_2":"Ingrese la función: ",
             "tolerancia_1":"La tolerancia debe ser un número real mayor que cero.",
             "tolerancia_2":"Ingrese la tolerancia: ",
