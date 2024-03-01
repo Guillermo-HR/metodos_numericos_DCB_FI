@@ -4,32 +4,95 @@ from metodos_numericos_dcb_fi.utilidades.validacion import validarTipo
 
 # ------------------- Importar bibliotecas -------------------
 import sympy as sp
+from sympy.abc import x
+import numpy as np
 
-# ------------------- Funciones -------------------
-def leerFuncion():
-    '''
-    Lee una función ingresada por el usuario y la convierte en una expresión simbólica utilizando la biblioteca sympy.
+# ------------------- Crear la clase funcion -------------------
+class funcion:
+    """
+    Clase 'funcion'
+
+    Esta clase representa una función matemática. Permite almacenar los valores de x e y de la función, así como también realizar operaciones y cálculos relacionados con la función.
+
+    Atributos:
+    - valores_x (list): Lista que almacena los valores de x de la función.
+    - valores_y (list): Lista que almacena los valores de y de la función.
+    - f_text (str): Texto de la función.
+    - f (function): Función simbólica de sympy.
+    - f_ (function): Función lambda de numpy.
+    """
+    def __init__(self) -> None:
+        """
+    Inicializa una instancia de la clase 'funcion'.
 
     Parámetros:
-        No recibe ningún parámetro.
+    - metodo (str): El método para el cual se va a utilizar la función.
+
+    Atributos:
+    - valores_x (list): Lista que almacena los valores de x de la función.
+    - valores_y (list): Lista que almacena los valores de y de la función.
+    - f_text (str): Texto de la función.
+    - f (function): Función simbólica de sympy.
+    - f_ (function): Función lambda de numpy.
+    """ 
+        self.valores_x = []
+        self.valores_y = []
+        self.limites = []
+        self.f_text = None
+        self.f = None
+        self.f_ = None
+    
+    def setFuncion(self, f):
+        '''
+    Establece la función de la instancia actual con la función especificada.
+
+    Parámetros:
+        - f (str): La función matemática especificada como una cadena de texto.
 
     Excepciones:
-        Exception: Si ocurre un error al convertir la función en una expresión simbólica.
+        - Exception: Si ocurre un error al establecer la función.
 
     Retorno:
-        Una expresión simbólica de la función ingresada por el usuario.
+        - None
 
     Ejemplo:
-        leerFuncion()
+        setFuncion("x**2 + 3*x - 2")
     '''
-    print(text["Util"]["Entrada"]["funcion_1"])
-    funcion = input(f'{text["Util"]["Entrada"]["funcion_2"]}')
-    x = sp.Symbol('x')
-    try:
-        funcion = sp.sympify(funcion)
-        return funcion
-    except:
-        raise Exception(f'{text["Util"]["Errores"]["funcion"].replace("{1}", funcion)}')
+        validarTipo(f, str)
+        f = f.replace('^', '**')
+        self.f_text = f
+        try:
+            self.f_ = sp.sympify(self.f_text)
+        except:
+            raise Exception(f'{text["Utilidades"]["Errores"]["funcion"].replace("{1}", self.f_text)}')
+        self.f = sp.lambdify(x, self.f_, 'numpy')
+
+    def agregarLimites(self, x_i:float, x_f:float):
+        validarTipo(x_i, (int, float))
+        validarTipo(x_f, (int, float))
+        self.limites = [(x_i, x_f)]
+# ------------------- Funciones -------------------
+def leerFuncion()->funcion:
+    '''
+    Lee una función matemática ingresada por el usuario y la asigna a una instancia de la clase 'funcion'.
+
+    Parámetros:
+        metodo (str): El método para el cual se va a utilizar la función. Por defecto es una cadena vacía.
+
+    Excepciones:
+        No se generan excepciones.
+
+    Retorno:
+        Una instancia de la clase 'funcion' con la función asignada.
+
+    Ejemplo:
+        f = leerFuncion()
+    '''
+    f = funcion()
+    print(text["Utilidades"]["Entrada"]["funcion_1"])
+    funcion_ = input(f'{text["Utilidades"]["Entrada"]["funcion_2"]}')
+    f.setFuncion(funcion_)
+    return f
     
 def leerTolerancia()->float:
     '''
@@ -47,11 +110,11 @@ def leerTolerancia()->float:
     Ejemplo:
         leerTolerancia()
     '''
-    print(text["Util"]["Entrada"]["tolerancia_1"])
-    tol = input(f'{text["Util"]["Entrada"]["tolerancia_2"]}')
+    print(text["Utilidades"]["Entrada"]["tolerancia_1"])
+    tol = input(f'{text["Utilidades"]["Entrada"]["tolerancia_2"]}')
     validarTipo(tol, (int, float))
     if tol <= 0:
-        raise ValueError(f'{text["Util"]["Errores"]["tolerancia"].replace("{1}", tol)}')
+        raise ValueError(f'{text["Utilidades"]["Errores"]["tolerancia"].replace("{1}", tol)}')
     return tol
 
 def leerPolinomio():
@@ -74,22 +137,22 @@ def leerPolinomio():
     Ejemplo de uso:
         leerPolinomio()
     '''
-    print(text["Util"]["Entrada"]["polinomio_1"])
-    grado = input(f'{text["Util"]["Entrada"]["polinomio_2"]}')
+    print(text["Utilidades"]["Entrada"]["polinomio_1"])
+    grado = input(f'{text["Utilidades"]["Entrada"]["polinomio_2"]}')
     validarTipo(grado, int)
     if grado <= 0:
-        raise ValueError(f'{text["Util"]["Errores"]["grado_polinomio"].replace("{1}", grado)}')
+        raise ValueError(f'{text["Utilidades"]["Errores"]["grado_polinomio"].replace("{1}", grado)}')
     coeficientes = []
     contador = 0
     for i in range(grado + 1):
-        coeficiente = input(f'{text["Util"]["Entrada"]["coeficiente"].replace("{1}", grado-i)}')
+        coeficiente = input(f'{text["Utilidades"]["Entrada"]["coeficiente"].replace("{1}", grado-i)}')
         validarTipo(coeficiente, (int, float))
         if i == contador and coeficiente == 0:
             contador += 1
         else:
             coeficientes.append(coeficiente)
     if len(coeficientes) < 2:
-        raise ValueError(text["Util"]["Errores"]["grado_final_polinomio"])
+        raise ValueError(text["Utilidades"]["Errores"]["grado_final_polinomio"])
     return coeficientes
 
 def leerMatriznxn()->np.array:
@@ -109,16 +172,16 @@ def leerMatriznxn()->np.array:
     Ejemplo:
         matriz = leerMatriznxn()
     """
-    print(text["Util"]["Entrada"]["matriz_nxn_1"])
-    n = input(f'{text["Util"]["Entrada"]["matriz_nxn_2"]}')
+    print(text["Utilidades"]["Entrada"]["matriz_nxn_1"])
+    n = input(f'{text["Utilidades"]["Entrada"]["matriz_nxn_2"]}')
     validarTipo(n, int)
     if n <= 0:
-        raise ValueError(f'{text["Util"]["Errores"]["matriz_nxn"].replace("{1}", n)}')
+        raise ValueError(f'{text["Utilidades"]["Errores"]["matriz_nxn"].replace("{1}", n)}')
     matriz = []
     for i in range(n):
         fila = []
         for j in range(n):
-            elemento = input(f'{text["Util"]["Entrada"]["matriz_nxn_3"].replace("{1}", i+1).replace("{2}", j+1)}')
+            elemento = input(f'{text["Utilidades"]["Entrada"]["matriz_nxn_3"].replace("{1}", i+1).replace("{2}", j+1)}')
             validarTipo(elemento, (int, float))
             fila.append(elemento)
         matriz.append(fila)
@@ -141,10 +204,10 @@ def leerVector(n:int, reglas:str='')->np.array:
     Ejemplo de uso:
     leerVector(5, 'Ingrese números enteros o decimales: ')
     """
-    print(f'{text["Util"]["Entrada"]["vector_1"]}{reglas}')
+    print(f'{text["Utilidades"]["Entrada"]["vector_1"]}{reglas}')
     vector = []
     for i in range(n):
-        elemento = input(f'{text["Util"]["Entrada"]["vector_2"].replace("{1}", i+1)}')
+        elemento = input(f'{text["Utilidades"]["Entrada"]["vector_2"].replace("{1}", i+1)}')
         validarTipo(elemento, (int, float))
         vector.append(elemento)
     return np.array(vector)
@@ -168,16 +231,16 @@ def leerVectorKrilov(n:int)->np.array:
     Ejemplo de uso:
     leerVectorKrilov(5)
     """
-    print(text["Util"]["Entrada"]["vector_K_1"])
-    opcion = input(f'{text["Util"]["Entrada"]["opcion"]}')
+    print(text["Utilidades"]["Entrada"]["vector_K_1"])
+    opcion = input(f'{text["Utilidades"]["Entrada"]["opcion"]}')
     if opcion == '0':
         vector = np.zeros(n) # Vector de ceros de tamaño n
         vector[0] = 1 # Primer elemento igual a 1
     else:
-        vector = leerVector(n, text["Util"]["Entrada"]["vector_K_2"])
+        vector = leerVector(n, text["Utilidades"]["Entrada"]["vector_K_2"])
         # si todos los elementos son cero
         if np.all(vector == 0):
-            print(text["Util"]["Errores"]["vector_K"])
+            print(text["Utilidades"]["Errores"]["vector_K"])
             vector = leerVectorKrilov(n)
     return vector
 
@@ -198,8 +261,8 @@ def leerDatosLU()->tuple[np.array, np.array]:
     Ejemplo:
         matriz, vector = leerDatosLU()
     '''
-    print(text["Util"]["Entrada"]["LU_1"])
+    print(text["Utilidades"]["Entrada"]["LU_1"])
     matriz = leerMatriznxn()
-    print(text["Util"]["Entrada"]["LU_2"])
+    print(text["Utilidades"]["Entrada"]["LU_2"])
     vector = leerVector(len(matriz))
     return matriz, vector

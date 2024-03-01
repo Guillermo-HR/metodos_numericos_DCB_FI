@@ -23,7 +23,30 @@ def validarTipo(valor:any, tipo:type)->None:
     validarTipo(5, int)
     """
     if not (isinstance(valor, tipo)):
-        raise Exception(f'{text["Util"]["Errores"]["tipo_entrada"].replace("{1}", f"{tipo}").replace("{2}", str(type(valor)))}')
+        raise Exception(f'{text["Utilidades"]["Errores"]["tipo_entrada"].replace("{1}", f"{tipo}").replace("{2}", str(type(valor)))}')
+
+def validarLista(lista:list, tipo:type)->None:
+    """
+    Función: validarLista
+
+    Descripción:
+    Esta función se utiliza para validar si una lista dada contiene solo valores de un tipo específico. Si algún valor en la lista no es del tipo especificado, se lanza una excepción.
+
+    Parámetros:
+    - lista: una lista que se desea validar.
+    - tipo: el tipo específico que se desea comprobar.
+
+    Excepciones:
+    - Exception: se lanza una excepción si algún valor en la lista no es del tipo especificado.
+
+    Retorno:
+    - None
+
+    Ejemplo de uso:
+    validarLista([1, 2, 3], int)
+    """
+    if not all(isinstance(x, tipo) for x in lista):
+        raise Exception(f'{text["Utilidades"]["Errores"]["tipo_entrada_2"].replace("{1}", f"{tipo}").replace("{2}", str(type(lista)))}')
 
 def validarDatosBiseccion(x_i:float, x_s:float, tol:float)->tuple[float, float, float]:
     '''
@@ -50,10 +73,10 @@ def validarDatosBiseccion(x_i:float, x_s:float, tol:float)->tuple[float, float, 
     validarTipo(x_i, (int, float))
     validarTipo(x_s, (int, float))
     if x_i >= x_s:
-        raise ValueError(f'{text["Util"]["Errores"]["biseccion"].replace("{1}", x_i).replace("{2}", x_s)}')
+        raise ValueError(f'{text["Utilidades"]["Errores"]["biseccion"].replace("{1}", x_i).replace("{2}", x_s)}')
     validarTipo(tol, (int, float))
     if tol <= 0:
-        raise ValueError(f'{text["Util"]["Errores"]["tolerancia"].replace("{1}", tol)}')
+        raise ValueError(f'{text["Utilidades"]["Errores"]["tolerancia"].replace("{1}", tol)}')
     return x_i, x_s, tol
 
 def validarDatosNR(x_0:str, tol:str):
@@ -80,5 +103,5 @@ def validarDatosNR(x_0:str, tol:str):
     validarTipo(x_0, (int, float))
     validarTipo(tol, (int, float))
     if tol <= 0:
-        raise ValueError(f'{text["Util"]["Errores"]["tolerancia"].replace("{1}", tol)}')
+        raise ValueError(f'{text["Utilidades"]["Errores"]["tolerancia"].replace("{1}", tol)}')
     return x_0, tol

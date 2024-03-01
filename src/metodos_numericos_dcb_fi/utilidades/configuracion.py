@@ -63,7 +63,7 @@ def cambiarIdioma(nuevo_idioma:str)->None:
         idioma = nuevo_idioma
         leerTextos()
     else:
-        raise Exception(f'{text["Util"]["Errores"]["idioma"].replace("{1}", ", ".join(idiomas_disponibles)).replace("{2}", nuevo_idioma)}')
+        raise Exception(f'{text["Utilidades"]["Errores"]["idioma"].replace("{1}", ", ".join(idiomas_disponibles)).replace("{2}", nuevo_idioma)}')
     
 def cambiarMaxIteraciones(nuevo_max_iteraciones:int)->None:
     '''
@@ -82,8 +82,8 @@ def cambiarMaxIteraciones(nuevo_max_iteraciones:int)->None:
         cambiar_max_iteraciones(30)
     '''
     if not isinstance(nuevo_max_iteraciones, int):
-        raise Exception(f'{text["Util"]["Errores"]["tipo_entrada"].replace("{1}", "int").replace("{2}", type(nuevo_max_iteraciones))}')
+        raise Exception(f'{text["Utilidades"]["Errores"]["tipo_entrada"].replace("{1}", "int").replace("{2}", type(nuevo_max_iteraciones))}')
     if nuevo_max_iteraciones < 1 or nuevo_max_iteraciones > 70:
-        raise Exception(f'{text["Util"]["Errores"]["max_iteraciones"].replace("{1}", str(nuevo_max_iteraciones))}')
+        raise Exception(f'{text["Utilidades"]["Errores"]["max_iteraciones"].replace("{1}", str(nuevo_max_iteraciones))}')
     global maxIteraciones
     maxIteraciones = nuevo_max_iteraciones

@@ -2,6 +2,9 @@
 from metodos_numericos_dcb_fi.utilidades.configuracion import text
 from metodos_numericos_dcb_fi.utilidades.validacion import validarTipo
 
+# ------------------- Importar bibliotecas -------------------
+import numpy as np
+
 # ------------------- Funciones -------------------
 def calcularErrorRelativo(valorReal: float, valorAproximado: float) -> float:
     '''
@@ -20,10 +23,8 @@ def calcularErrorRelativo(valorReal: float, valorAproximado: float) -> float:
     Ejemplo:
         calcular_error_relativo(10.5, 10.2) -> 2.85714
     '''
-    if not (isinstance(valorReal, (int, float))):
-        raise Exception(f'{text["Util"]["Errores"]["tipo_entrada"].replace("{1}", "int, float").replace("{2}", type(valorReal))}')
-    if not (isinstance(valorAproximado, (int, float))):
-        raise Exception(f'{text["Util"]["Errores"]["tipo_entrada"].replace("{1}", "int, float").replace("{2}", type(valorAproximado))}')
+    validarTipo(valorReal, (int, float))
+    validarTipo(valorAproximado, (int, float))
     if valorReal == 0:
         return round(abs(valorReal - valorAproximado),5)
     return round(abs((valorReal - valorAproximado) / valorReal) * 100,5)
@@ -72,7 +73,7 @@ def quitarNan(valores_x:list, valores_y:list) -> tuple[list, list]:
     validarTipo(valores_x, list)
     validarTipo(valores_y, list)
     if len(valores_x) != len(valores_y):
-        raise Exception(f'{text["Util"]["Errores"]["quitar_nan"].replace("{1}", len(valores_x)).replace("{2}", len(valores_y))}')
+        raise Exception(f'{text["Utilidades"]["Errores"]["quitar_nan"].replace("{1}", len(valores_x)).replace("{2}", len(valores_y))}')
     valores_x_actualizado = []
     valores_y_actualizado = []
     len_y = len(valores_y)

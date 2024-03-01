@@ -37,11 +37,11 @@ def mostrarPolinomio(a:list[float], variable:str='x', titulo:str='')->None:
         validarTipo(coeficiente, (int, float))
     # validar que la variable sea al menos un caracter
     if len(variable) == 0:
-        raise ValueError(f'{text["Util"]["Errores"]["len_variable"].replace("{1}", 1).replace("{2}", len(variable))}')
+        raise ValueError(f'{text["Utilidades"]["Errores"]["len_variable"].replace("{1}", 1).replace("{2}", len(variable))}')
     # validar si todos los caracteres de la variable son letras latinas o griegas
     for letra in variable:
         if not (letra in letras_latinas + letras_griegas):
-            raise ValueError(f'{text["Util"]["Errores"]["variable"].replace("{1}", variable)}')
+            raise ValueError(f'{text["Utilidades"]["Errores"]["variable"].replace("{1}", variable)}')
     # Si la variable es mas de 1 caracter poerla entre parentesis en el polinomio 
     if len(variable)>1:
         variable = f'({variable})'
@@ -128,7 +128,7 @@ def agregarRenglonFactoresCuadraticos(tabla:pd.DataFrame, p:float, q:float, b:li
     validarTipo(dq, (int, float))
     # validar la longitud de b
     if len(b) != len(tabla.columns) - 6:
-        raise Exception(f'{text["Util"]["Errores"]["len_b_FC"].replace("{1}", len(tabla.columns) - 6).replace("{2}", len(b))}')
+        raise Exception(f'{text["Utilidades"]["Errores"]["len_b_FC"].replace("{1}", len(tabla.columns) - 6).replace("{2}", len(b))}')
     # agregar un renglón a la tabla
     nuevo_renglon = [p, q]
     nuevo_renglon.extend(b)
