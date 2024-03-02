@@ -21,7 +21,9 @@
             "graficar_curvas_2":"Las listas deben tener la misma longitud.\nLongitud de la lista 1: {1}.\nLongitud de la lista 2: {2}.",
             "graficar_curvas_3":"Error al graficar.",
             "graficar_puntos":"La lista a graficar debe contener exactamente 4 elementos.\nElementos ingresados: {1}.",
-            "graficar_lineas":"La lista a graficar debe contener exactamente 3 elementos.\nElementos ingresados: {1}."
+            "graficar_lineas":"La lista a graficar debe contener exactamente 3 elementos.\nElementos ingresados: {1}.",
+            "funcion_no_continua":"La funcion no es continua en el intervalo [{1}, {2}].",
+            "funcion_no_continua_2":"No se pudo graficar la funcion {1}."
         },
         "Entrada":{
             "opcion":"Ingrese la opción deseada: ",

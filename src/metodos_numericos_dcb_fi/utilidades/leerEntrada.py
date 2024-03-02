@@ -59,7 +59,7 @@ class funcion:
         setFuncion("x**2 + 3*x - 2")
     '''
         validarTipo(f, str)
-        f = f.replace('^', '**')
+        f = f.replace('^', '**').replace('sen', 'sin').replace('tg', 'tan').replace('ctg', 'cot')
         self.f_text = f
         try:
             self.f_ = sp.sympify(self.f_text)
@@ -72,12 +72,12 @@ class funcion:
         validarTipo(x_f, (int, float))
         self.limites = [(x_i, x_f)]
 # ------------------- Funciones -------------------
-def leerFuncion()->funcion:
+def leerFuncion(f:str='')->funcion:
     '''
     Lee una función matemática ingresada por el usuario y la asigna a una instancia de la clase 'funcion'.
 
     Parámetros:
-        metodo (str): El método para el cual se va a utilizar la función. Por defecto es una cadena vacía.
+        f (str): la funcion en forma de scadena que se va a asignar a la instancia de la clase 'funcion'. Por defecto es una cadena vacía.
 
     Excepciones:
         No se generan excepciones.
@@ -88,11 +88,12 @@ def leerFuncion()->funcion:
     Ejemplo:
         f = leerFuncion()
     '''
-    f = funcion()
-    print(text["Utilidades"]["Entrada"]["funcion_1"])
-    funcion_ = input(f'{text["Utilidades"]["Entrada"]["funcion_2"]}')
-    f.setFuncion(funcion_)
-    return f
+    f_ = funcion()
+    if f == '':
+        print(text["Utilidades"]["Entrada"]["funcion_1"])
+        f = input(f'{text["Utilidades"]["Entrada"]["funcion_2"]}')
+    f_.setFuncion(f)
+    return f_
     
 def leerTolerancia()->float:
     '''
