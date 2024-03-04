@@ -84,6 +84,14 @@ def graficarNR(f:funcion, x_0:float, tolerancia:float, animacion:bool=True)->go.
                 raise ValueError(f'{text["Errores"]["funcion_no_continua_2"].replace("{1}", f.f_text)}')
             fig.data[0].x = tuple(x_)
             fig.data[0].y = tuple(y)
+        if x_nueva > x_.max():
+            x_ = np.linspace(x_0-0.5, x_nueva+0.5, int(abs(x_nueva+1-x_0)*15))
+            try:
+                y = [f.f(i) for i in x_]
+            except:
+                raise ValueError(f'{text["Errores"]["funcion_no_continua_2"].replace("{1}", f.f_text)}')
+            fig.data[0].x = tuple(x_)
+            fig.data[0].y = tuple(y)
         fig.add_trace(go.Scatter(x=[x_nueva, x_anterior], y=[0, f.f(x_anterior)], mode='lines', line=dict(color='red', width=1, dash='dash'), showlegend=True, name=f'df({round(x_anterior, 2)})'))
         fig.add_trace(go.Scatter(x=[x_anterior, x_anterior], y=[0,f.f(x_anterior)], mode='lines', line=dict(color='red', width=1, dash='dash'), showlegend=False))
         if abs(f.f(x_nueva)) == 0:
