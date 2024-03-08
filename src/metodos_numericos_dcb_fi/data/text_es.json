@@ -33,7 +33,7 @@
             "tolerancia_2":"Ingrese la tolerancia: ",
             "polinomio_1":"Reglas para ingresar polinomios:\n1.- EL grado del polinomio debe ser un numero entero mayor a 0.\n2.- Los coeficientes deben ser números reales.\n3.- Al menos 1 de los coeficientes debe ser distinto de cero.",
             "polinomio_2":"Ingrese el grado del polinomio: ",
-            "polinomio_3":"Ingrese los coeficientes del grado {1}: ",
+            "coeficiente":"Ingrese los coeficientes del grado {1}: ",
             "matriz_nxn_1":"Reglas para ingresar una matriz:\n1.- La matriz debe ser cuadrada.\n2.- Los elementos deben ser números reales.",
             "matriz_nxn_2":"Ingrese el tamaño de la matriz cuadrada (debe ser un numero entero mayor que 0): ",
             "matriz_nxn_3":"Ingrese el elemento {1},{2}: ",

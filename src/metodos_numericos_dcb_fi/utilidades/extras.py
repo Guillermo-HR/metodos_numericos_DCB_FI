@@ -4,6 +4,8 @@ from metodos_numericos_dcb_fi.utilidades.validacion import validarTipo
 
 # ------------------- Importar bibliotecas -------------------
 import numpy as np
+import sympy as sp
+from sympy.abc import x
 
 # ------------------- Funciones -------------------
 def calcularErrorRelativo(valorReal: float, valorAproximado: float) -> float:
@@ -84,3 +86,10 @@ def quitarNan(valores_x:list, valores_y:list) -> tuple[list, list]:
             valores_x_actualizado.append(valores_x[i])
             valores_y_actualizado.append(valores_y[i])
     return valores_x_actualizado, valores_y_actualizado
+
+def obtenerRaiz(polinomio:list):
+    if len(polinomio) == 2:
+        return sp.solve(polinomio[0]*x + polinomio[1], x)
+    if len(polinomio) == 3:
+        raices = sp.solve(polinomio[0]*x**2 + polinomio[1]*x + polinomio[2], x)
+        return raices[0], raices[1]

@@ -95,7 +95,7 @@ def leerFuncion(f:str='')->funcion:
     f_.setFuncion(f)
     return f_
     
-def leerTolerancia()->float:
+def leerTolerancia(t:str='')->float:
     '''
     Lee la tolerancia ingresada por el usuario y la devuelve como un número de punto flotante.
 
@@ -111,14 +111,15 @@ def leerTolerancia()->float:
     Ejemplo:
         leerTolerancia()
     '''
+    if t != '':
+        return float(t)
     print(text["Utilidades"]["Entrada"]["tolerancia_1"])
-    tol = input(f'{text["Utilidades"]["Entrada"]["tolerancia_2"]}')
-    validarTipo(tol, (int, float))
+    tol = float(input(f'{text["Utilidades"]["Entrada"]["tolerancia_2"]}'))
     if tol <= 0:
         raise ValueError(f'{text["Utilidades"]["Errores"]["tolerancia"].replace("{1}", tol)}')
     return tol
 
-def leerPolinomio():
+def leerPolinomio(c:list=[]):
     '''
     Función: leerPolinomio
 
@@ -138,16 +139,16 @@ def leerPolinomio():
     Ejemplo de uso:
         leerPolinomio()
     '''
+    if len(c) > 0:
+        return c
     print(text["Utilidades"]["Entrada"]["polinomio_1"])
-    grado = input(f'{text["Utilidades"]["Entrada"]["polinomio_2"]}')
-    validarTipo(grado, int)
+    grado = int(input(f'{text["Utilidades"]["Entrada"]["polinomio_2"]}'))
     if grado <= 0:
         raise ValueError(f'{text["Utilidades"]["Errores"]["grado_polinomio"].replace("{1}", grado)}')
     coeficientes = []
     contador = 0
     for i in range(grado + 1):
-        coeficiente = input(f'{text["Utilidades"]["Entrada"]["coeficiente"].replace("{1}", grado-i)}')
-        validarTipo(coeficiente, (int, float))
+        coeficiente = float(input(f'{text["Utilidades"]["Entrada"]["coeficiente"].replace("{1}", str(grado-i))}'))
         if i == contador and coeficiente == 0:
             contador += 1
         else:

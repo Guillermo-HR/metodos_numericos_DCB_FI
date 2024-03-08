@@ -114,4 +114,22 @@ def graficarNR(f:funcion, x_0:float, tolerancia:float, animacion:bool=True)->go.
     clear_output(wait=True)
     fig.show()
     
-
+def graficarPolinomio(c:list[float]):
+    grado = len(c) - 1
+    p = np.poly1d(c)
+    raices = p.r
+    raicesReales = [raiz for raiz in raices if not isinstance(raiz, complex)]
+    if len(raicesReales) == 0:
+        x_min = -10
+        x_max = 10
+    else:
+        x_min = min(raicesReales)
+        x_max = max(raicesReales)
+    x_ = np.linspace(x_min-0.5, x_max+0.5, int(abs(x_max-x_min+1)*15))
+    y = [p(i) for i in x_]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x_, y=y, name=f'p_{grado}(x)', mode='lines', line=dict(color='blue', width=2), showlegend=True))
+    if len(c) < 4:
+        for raiz in raicesReales:
+            fig.add_trace(go.Scatter(x=[raiz], y=[0], mode='markers', marker=dict(color='red', size=10, symbol='diamond-open'), showlegend=True, name=f'Raíz: {round(raiz,5)}'))
+    fig.show()

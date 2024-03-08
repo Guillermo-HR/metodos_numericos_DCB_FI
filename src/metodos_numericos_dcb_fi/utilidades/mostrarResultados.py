@@ -136,6 +136,27 @@ def agregarRenglonFactoresCuadraticos(tabla:pd.DataFrame, p:float, q:float, b:li
     tabla.loc[len(tabla)+1] = nuevo_renglon
     return tabla
 
+def mostrarTablaFactoresCuadraticos(tabla:pd.DataFrame)->None:
+    '''
+    Muestra una tabla de datos que contiene factores cuadráticos.
+
+    Parámetros:
+    - tabla: DataFrame de pandas que representa la tabla de datos.
+
+    Excepciones:
+    - Exception: Se lanza una excepción si el parámetro 'tabla' no es un DataFrame de pandas.
+
+    Retorno:
+    - None
+
+    Ejemplo de uso:
+    mostrarTablaFactoresCuadraticos(tabla)
+    '''
+    # validar el tipo de tabla
+    validarTipo(tabla, pd.DataFrame)
+    # mostrar la tabla
+    display(tabla)
+
 def mostrarMatriz(matriz:np.ndarray[float], nombre:str='M')->None:
     """
     Función: mostrarMatriz
@@ -233,3 +254,10 @@ def mostrarValoresCaracteristicos(valores:np.ndarray)->None:
             display(Math(f'λ_{i} = {np.round(valor.real, 3)}'))
         else:
             display(Math(f'λ_{i} = {np.round(valor.real, 3)}'))
+
+def mostrarRaiz(r)->None:
+    if len(r) == 1:
+        display(Math('r = ' + sp.latex(r[0])))
+    else:
+        display(Math('r_1 = ' + sp.latex(r[0])))
+        display(Math('r_2 = ' + sp.latex(r[1])))
