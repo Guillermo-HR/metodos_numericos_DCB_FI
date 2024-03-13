@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "metodos_numericos_dcb_fi"
-version = "0.1.6"
+version = "0.1.7"
 authors = [
   { name="Guillermo Hernández Ruiz de Esparza", email="guillermo.hre@gmail.com" },
 ]
@@ -27,7 +27,8 @@ dependencies = [
   "ipython",
   "pathlib",
   "plotly",
-  "nbformat"
+  "nbformat",
+  "scipy"
 ]
 license = {text = "MIT License"}
 keywords = ["Métodos numéricos", "Numerical methods"]
