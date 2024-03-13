@@ -113,6 +113,7 @@ def graficarNR(f:funcion, x_0:float, tolerancia:float, animacion:bool=True)->go.
 
     clear_output(wait=True)
     fig.show()
+    return fig
     
 def graficarPolinomio(c:list[float]):
     grado = len(c) - 1
@@ -133,3 +134,62 @@ def graficarPolinomio(c:list[float]):
         for raiz in raicesReales:
             fig.add_trace(go.Scatter(x=[raiz], y=[0], mode='markers', marker=dict(color='red', size=10, symbol='diamond-open'), showlegend=True, name=f'Raíz: {round(raiz,5)}'))
     fig.show()
+    return fig
+
+def graficarTrapecio(f:funcion, a:float, b:float, integral:float):
+    titulo = f'Metodo del Trapecio con intervalo [{a}, {b}]' # Titulo de la grafica
+    eje_x = 'x' # Nombre del eje x
+    eje_y = 'f(x)' # Nombre del eje y
+    rango_x = np.linspace(a, b, int(abs(a-b))*15, dtype = 'float') # Rango en x
+    funcion = [f.f(x) for x in rango_x] # Rango en y
+
+    fig = go.Figure() # Crear figura
+    trapecio = go.Scatter(x = [a, b], y = [f.f(a), f.f(b)], name=f'Método<br>{round(integral,4)}', line=dict(dash = "dash", color='red', width=2), fill = 'tozeroy')
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x) = {f.f_text}', line=dict(color='blue', width=2))) # Graficar f(x)
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'Analítico<br>{round(sp.integrate(f.f_, (x, a, b)), 4)}', line=dict(color='blue', width=2), fill = 'tozeroy')) # Graficar f(x)
+    fig.add_trace(trapecio) # Graficar metodo
+    fig.add_trace(go.Scatter(x = [a, b], y = [f.f(a), f.f(b)], mode='markers', name='Puntos trapecio', marker=dict(color='red', size=10)))
+    fig.update_layout(title=titulo, title_x=0.5, xaxis_title=eje_x, yaxis_title=eje_y) # ¡¡¡NO MODIFICAR!!!
+    fig.show() # ¡¡¡NO MODIFICAR!!!
+    return fig
+
+def graficarSimpson1_3(f:funcion, a:float, b:float, integral:float):
+    titulo = f'Metodo de Simpson 1/3 con intervalo [{a}, {b}]' # Titulo de la grafica
+    eje_x = 'x' # Nombre del eje x
+    eje_y = 'f(x)' # Nombre del eje y
+    rango_x = np.linspace(a, b, int(abs(a-b))*15, dtype = 'float') # Rango en x
+    funcion = [f.f(x) for x in rango_x] # Rango en y
+    # obtener la funcion se la parabola que pasa por los puntos (a, f(a)), ((a+b)/2, f((a+b)/2)), (b, f(b))
+    parabola = np.polyfit([a, (a+b)/2, b], [f.f(a), f.f((a+b)/2), f.f(b)], 2)
+    parabola = np.poly1d(parabola)
+    
+    fig = go.Figure() # Crear figura
+    simpson1_3 = go.Scatter(x = rango_x, y = [parabola(x) for x in rango_x], name=f'Método<br>{round(integral,4)}', line=dict(color='red', width=2, dash = "dash"), fill = 'tozeroy')
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x) = {f.f_text}', line=dict(color='blue', width=2))) # Graficar f(x)
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'Analítico<br>{round(sp.integrate(f.f_, (x, a, b)), 4)}', line=dict(color='blue', width=2), fill = 'tozeroy')) # Graficar f(x)
+    fig.add_trace(simpson1_3) # Graficar metodo
+    # graficar solo los 3 puntos que se usaron para calcular la parabola
+    fig.add_trace(go.Scatter(x = [a, (a+b)/2, b], y = [f.f(a), f.f((a+b)/2), f.f(b)], mode='markers', name='Puntos parabola', marker=dict(color='red', size=10)))
+    fig.update_layout(title=titulo, title_x=0.5, xaxis_title=eje_x, yaxis_title=eje_y) # ¡¡¡NO MODIFICAR!!!
+    fig.show() # ¡¡¡NO MODIFICAR!!!
+    return fig
+
+def graficarSimpson3_8(f:funcion, a:float, b:float, integral:float):
+    titulo = f'Metodo de Simpson 3/8 con intervalo [{a}, {b}]' # Titulo de la grafica
+    eje_x = 'x' # Nombre del eje x
+    eje_y = 'f(x)' # Nombre del eje y
+    rango_x = np.linspace(a, b, int(abs(a-b))*15, dtype = 'float') # Rango en x
+    funcion = [f.f(x) for x in rango_x] # Rango en y
+    # obtener la funcion se la cubica que pasa por los puntos (a, f(a)), ((a+b)/2, f((a+b)/2)), (b, f(b))
+    cubica = np.polyfit([a, (2*a+b)/3, (a+2*b)/3, b], [f.f(a), f.f((2*a+b)/3), f.f((a+2*b)/3), f.f(b)], 3)
+    cubica = np.poly1d(cubica)
+    
+    fig = go.Figure() # Crear figura
+    simpson3_8 = go.Scatter(x = rango_x, y = [cubica(x) for x in rango_x], name=f'Método<br>{round(integral,4)}', line=dict(color='red', width=2, dash = "dash"), fill = 'tozeroy')
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x) = {f.f_text}', line=dict(color='blue', width=2))) # Graficar f(x)
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'Analítico<br>{round(sp.integrate(f.f_, (x, a, b)), 4)}', line=dict(color='blue', width=2), fill = 'tozeroy')) # Graficar f(x)
+    fig.add_trace(simpson3_8) # Graficar metodo
+    # graficar los 4 puntos que se usaron para calcular la cubica
+    fig.add_trace(go.Scatter(x = [a, (2*a+b)/3, (a+2*b)/3, b], y = [f.f(a), f.f((2*a+b)/3), f.f((a+2*b)/3), f.f(b)], mode='markers', name='Puntos cúbica', marker=dict(color='red', size=10)))
+    fig.update_layout(title=titulo, title_x=0.5, xaxis_title=eje_x, yaxis_title=eje_y) # ¡¡¡NO MODIFICAR!!!
+    fig.show() # ¡¡¡NO MODIFICAR!!!
