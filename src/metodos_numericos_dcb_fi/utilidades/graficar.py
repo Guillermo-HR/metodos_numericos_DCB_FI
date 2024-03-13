@@ -136,60 +136,87 @@ def graficarPolinomio(c:list[float]):
     fig.show()
     return fig
 
-def graficarTrapecio(f:funcion, a:float, b:float, integral:float):
-    titulo = f'Metodo del Trapecio con intervalo [{a}, {b}]' # Titulo de la grafica
+def graficarTrapecio(f:funcion, a:float, b:float, integral:float, mostrar=True):
+    titulo = f'Metodo del Trapecio<br>Para f(x) = {f.f_text} con intervalo [{a}, {b}]' # Titulo de la grafica
     eje_x = 'x' # Nombre del eje x
     eje_y = 'f(x)' # Nombre del eje y
-    rango_x = np.linspace(a, b, int(abs(a-b))*15, dtype = 'float') # Rango en x
+    rango_x = np.linspace(a, b, int(abs(a-b))*25, dtype = 'float') # Rango en x
     funcion = [f.f(x) for x in rango_x] # Rango en y
 
     fig = go.Figure() # Crear figura
-    trapecio = go.Scatter(x = [a, b], y = [f.f(a), f.f(b)], name=f'Método<br>{round(integral,4)}', line=dict(dash = "dash", color='red', width=2), fill = 'tozeroy')
-    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x) = {f.f_text}', line=dict(color='blue', width=2))) # Graficar f(x)
+    trapecio = go.Scatter(x = [a, b], y = [f.f(a), f.f(b)], name=f'Trapecio<br>{round(integral,4)}', line=dict(dash = "dash", color='red', width=2), fill = 'tozeroy')
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x)', line=dict(color='blue', width=2))) # Graficar f(x)
     fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'Analítico<br>{round(sp.integrate(f.f_, (x, a, b)), 4)}', line=dict(color='blue', width=2), fill = 'tozeroy')) # Graficar f(x)
     fig.add_trace(trapecio) # Graficar metodo
     fig.add_trace(go.Scatter(x = [a, b], y = [f.f(a), f.f(b)], mode='markers', name='Puntos trapecio', marker=dict(color='red', size=10)))
     fig.update_layout(title=titulo, title_x=0.5, xaxis_title=eje_x, yaxis_title=eje_y) # ¡¡¡NO MODIFICAR!!!
-    fig.show() # ¡¡¡NO MODIFICAR!!!
+    if mostrar:
+        fig.show() # ¡¡¡NO MODIFICAR!!!
     return fig
 
-def graficarSimpson1_3(f:funcion, a:float, b:float, integral:float):
-    titulo = f'Metodo de Simpson 1/3 con intervalo [{a}, {b}]' # Titulo de la grafica
+def graficarSimpson1_3(f:funcion, a:float, b:float, integral:float, mostrar=True):
+    titulo = f'Metodo de Simpson 1/3<br>Para f(x) = {f.f_text} con intervalo [{a}, {b}]' # Titulo de la grafica
     eje_x = 'x' # Nombre del eje x
     eje_y = 'f(x)' # Nombre del eje y
-    rango_x = np.linspace(a, b, int(abs(a-b))*15, dtype = 'float') # Rango en x
+    rango_x = np.linspace(a, b, int(abs(a-b))*25, dtype = 'float') # Rango en x
     funcion = [f.f(x) for x in rango_x] # Rango en y
     # obtener la funcion se la parabola que pasa por los puntos (a, f(a)), ((a+b)/2, f((a+b)/2)), (b, f(b))
     parabola = np.polyfit([a, (a+b)/2, b], [f.f(a), f.f((a+b)/2), f.f(b)], 2)
     parabola = np.poly1d(parabola)
     
     fig = go.Figure() # Crear figura
-    simpson1_3 = go.Scatter(x = rango_x, y = [parabola(x) for x in rango_x], name=f'Método<br>{round(integral,4)}', line=dict(color='red', width=2, dash = "dash"), fill = 'tozeroy')
-    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x) = {f.f_text}', line=dict(color='blue', width=2))) # Graficar f(x)
+    simpson1_3 = go.Scatter(x = rango_x, y = [parabola(x) for x in rango_x], name=f'Simpson 1/3<br>{round(integral,4)}', line=dict(color='red', width=2, dash = "dash"), fill = 'tozeroy')
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x)', line=dict(color='blue', width=2))) # Graficar f(x)
     fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'Analítico<br>{round(sp.integrate(f.f_, (x, a, b)), 4)}', line=dict(color='blue', width=2), fill = 'tozeroy')) # Graficar f(x)
     fig.add_trace(simpson1_3) # Graficar metodo
     # graficar solo los 3 puntos que se usaron para calcular la parabola
     fig.add_trace(go.Scatter(x = [a, (a+b)/2, b], y = [f.f(a), f.f((a+b)/2), f.f(b)], mode='markers', name='Puntos parabola', marker=dict(color='red', size=10)))
     fig.update_layout(title=titulo, title_x=0.5, xaxis_title=eje_x, yaxis_title=eje_y) # ¡¡¡NO MODIFICAR!!!
-    fig.show() # ¡¡¡NO MODIFICAR!!!
+    if mostrar:
+        fig.show() # ¡¡¡NO MODIFICAR!!!
     return fig
 
-def graficarSimpson3_8(f:funcion, a:float, b:float, integral:float):
-    titulo = f'Metodo de Simpson 3/8 con intervalo [{a}, {b}]' # Titulo de la grafica
+def graficarSimpson3_8(f:funcion, a:float, b:float, integral:float, mostrar=True):
+    titulo = f'Metodo de Simpson 3/8<br>Para f(x) = {f.f_text} con intervalo [{a}, {b}]' # Titulo de la grafica
     eje_x = 'x' # Nombre del eje x
     eje_y = 'f(x)' # Nombre del eje y
-    rango_x = np.linspace(a, b, int(abs(a-b))*15, dtype = 'float') # Rango en x
+    rango_x = np.linspace(a, b, int(abs(a-b))*25, dtype = 'float') # Rango en x
     funcion = [f.f(x) for x in rango_x] # Rango en y
     # obtener la funcion se la cubica que pasa por los puntos (a, f(a)), ((a+b)/2, f((a+b)/2)), (b, f(b))
     cubica = np.polyfit([a, (2*a+b)/3, (a+2*b)/3, b], [f.f(a), f.f((2*a+b)/3), f.f((a+2*b)/3), f.f(b)], 3)
     cubica = np.poly1d(cubica)
     
     fig = go.Figure() # Crear figura
-    simpson3_8 = go.Scatter(x = rango_x, y = [cubica(x) for x in rango_x], name=f'Método<br>{round(integral,4)}', line=dict(color='red', width=2, dash = "dash"), fill = 'tozeroy')
-    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x) = {f.f_text}', line=dict(color='blue', width=2))) # Graficar f(x)
+    simpson3_8 = go.Scatter(x = rango_x, y = [cubica(x) for x in rango_x], name=f'Simpson 3/8<br>{round(integral,4)}', line=dict(color='red', width=2, dash = "dash"), fill = 'tozeroy')
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x)', line=dict(color='blue', width=2))) # Graficar f(x)
     fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'Analítico<br>{round(sp.integrate(f.f_, (x, a, b)), 4)}', line=dict(color='blue', width=2), fill = 'tozeroy')) # Graficar f(x)
     fig.add_trace(simpson3_8) # Graficar metodo
     # graficar los 4 puntos que se usaron para calcular la cubica
     fig.add_trace(go.Scatter(x = [a, (2*a+b)/3, (a+2*b)/3, b], y = [f.f(a), f.f((2*a+b)/3), f.f((a+2*b)/3), f.f(b)], mode='markers', name='Puntos cúbica', marker=dict(color='red', size=10)))
     fig.update_layout(title=titulo, title_x=0.5, xaxis_title=eje_x, yaxis_title=eje_y) # ¡¡¡NO MODIFICAR!!!
+    if mostrar:
+        fig.show() # ¡¡¡NO MODIFICAR!!!
+    return fig
+
+def compararIntegracion(f:funcion, a:float, b:float, *graficas:go.Figure):
+    titulo = f'Comparación de los métodos de integración: trapecio, Simpson 1/3 y Simpson 3/8<br>Para f(x) = {f.f_text} con intervalo [{a}, {b}]' # Titulo de la grafica
+    eje_x = 'x' # Nombre del eje x
+    eje_y = 'f(x)' # Nombre del eje y
+    rango_x = np.linspace(a, b, int(abs(a-b))*25, dtype = 'float') # Rango en x
+    funcion = [f.f(x) for x in rango_x] # Rango en y
+
+    fig = go.Figure() # Crear figura
+    fig.update_layout(title=titulo, title_x=0.5, xaxis_title=eje_x, yaxis_title=eje_y) # ¡¡¡NO MODIFICAR!!!
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'f(x)', line=dict(color='blue', width=2))) # Graficar f(x)
+    fig.add_trace(go.Scatter(x = rango_x, y = funcion, name=f'Analítico<br>{round(sp.integrate(f.f_, (x, a, b)), 4)}', line=dict(color='blue', width=2), fill = 'tozeroy')) # Graficar f(x)
+
+    colores = ['red', 'green', 'orange']
+    for g, color in zip(graficas, colores):
+        grafica = g.data[2]
+        puntos = g.data[3]
+        grafica.line.color = color
+        puntos.marker.color = color
+        fig.add_trace(grafica)
+        fig.add_trace(puntos)
+
     fig.show() # ¡¡¡NO MODIFICAR!!!
