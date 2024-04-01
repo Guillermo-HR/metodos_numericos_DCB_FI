@@ -220,3 +220,63 @@ def compararIntegracion(f:funcion, a:float, b:float, *graficas:go.Figure):
         fig.add_trace(puntos)
 
     fig.show() # ¡¡¡NO MODIFICAR!!!
+
+def graficar(valores:list,**configuracion:dict):
+    if configuracion['titulo'] != None:
+        titulo = configuracion['titulo']
+    else:
+        titulo = f'Grafica de f(x) con intervalo [{a}, {b}]'
+    if configuracion['labels'] != None:
+        eje_x = configuracion['labels'][0]
+        eje_y = configuracion['labels'][1]
+    else:
+        eje_x = 'x'
+        eje_y = 'f(x)'
+    
+    # Configuraciones predeterminadAs para graficar
+    if configuracion['metodo'] == 'Euler':
+        mode_ = 'makers'
+        name_='Euler'
+        markers = dict(size=8, symbol='diamond', color='lime')
+        showlegend_=True
+    elif configuracion['metodo'] == 'Euler M':
+        mode_ = 'makers'
+        name_='Euler modificado'
+        markers = dict(size=8, symbol='triangle-up', color='darkviolet')
+        showlegend_=True
+    elif configuracion['metodo'] == 'RK4':
+        mode_ = 'makers'
+        name_='Runge-Kutta 4'
+        markers = dict(size=8, symbol='triangle-down', color='hotpink')
+        showlegend_=True
+    elif configuracion['metodo'] == 'Analitica':
+        mode_ = 'lines'
+        name_ = 'Solución analítica'
+        lines = dict(color='blue', width=2)
+        showlegend_ = True
+    
+    fig = go.Figure() # Crear figura
+    fig.update_layout(title=titulo, title_x=0.5, xaxis_title=eje_x, yaxis_title=eje_y)
+    
+    if mode_ == 'makers':
+        fig.add_trace(go.Scatter(x=valores[0], y=valores[1], mode='markers', marker=markers, showlegend=showlegend_, name=name_))
+    elif mode_ == 'lines':
+        fig.add_trace(go.Scatter(x=valores[0], y=valores[1], mode='lines', line=lines, showlegend=showlegend_, name=name_))
+    fig.show() # ¡¡¡NO MODIFICAR!!!
+    return fig
+
+def compararMetodos(titulo, *graficas, **configuracion):
+    if configuracion['labels'] != None:
+        eje_x = configuracion['labels'][0]
+        eje_y = configuracion['labels'][1]
+    else:
+        eje_x = 'x'
+        eje_y = 'f(x)'
+    
+    fig = go.Figure() # Crear figura
+    fig.update_layout(title=titulo, title_x=0.5, title_y=0.9, xaxis_title=eje_x, yaxis_title=eje_y, legend_title='Métodos') # ¡¡¡NO MODIFICAR!!!
+
+    for g in graficas:
+        fig.add_trace(g)
+    fig.show() # ¡¡¡NO MODIFICAR!!!
+    return fig

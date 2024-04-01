@@ -42,7 +42,8 @@
             "vector_K_1":"Si desea utilizar el vector de Krilov por defecto ingrese 0. En caso contrario ingrese 1.",
             "vector_K_2":"n2.- Al menos un elemento debe ser distinto de cero.",
             "datos_LU_1":"Matriz de coeficientes:",
-            "datos_LU_2":"Vector de terminos independientes:"
+            "datos_LU_2":"Vector de terminos independientes:",
+            "variable":"La variable {1} debe ser una letra latina, griega o combinacion de ambas."
         }
     }
 }

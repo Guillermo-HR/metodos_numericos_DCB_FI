@@ -1,6 +1,7 @@
 # ------------------- Importar módulos -------------------
 from metodos_numericos_dcb_fi.utilidades.configuracion import text
 from metodos_numericos_dcb_fi.utilidades.validacion import validarTipo
+from metodos_numericos_dcb_fi.utilidades.configuracion import letras_griegas, letras_latinas
 
 # ------------------- Importar bibliotecas -------------------
 import sympy as sp
@@ -38,11 +39,11 @@ class funcion:
         self.valores_x = []
         self.valores_y = []
         self.limites = []
-        self.f_text = None
-        self.f = None
-        self.f_ = None
+        self.f_text = None # Texto
+        self.f = None # Lambdify
+        self.f_ = None # Sympify
     
-    def setFuncion(self, f):
+    def setFuncion(self, f:str, var:str='x'):
         '''
     Establece la función de la instancia actual con la función especificada.
 
@@ -65,14 +66,38 @@ class funcion:
             self.f_ = sp.sympify(self.f_text)
         except:
             raise Exception(f'{text["Utilidades"]["Errores"]["funcion"].replace("{1}", self.f_text)}')
-        self.f = sp.lambdify(x, self.f_, 'numpy')
+        for _ in var:
+            if _ not in letras_latinas and _ not in letras_griegas:
+                raise Exception(f'{text["Utilidades"]["Errores"]["variable"].replace("{1}", _)}')
+        self.f = sp.lambdify(var, self.f_, 'numpy')
 
     def agregarLimites(self, x_i:float, x_f:float):
         validarTipo(x_i, (int, float))
         validarTipo(x_f, (int, float))
         self.limites = [(x_i, x_f)]
 # ------------------- Funciones -------------------
-def leerFuncion(f:str='')->funcion:
+def convertirFuncion(f:str, var:str='x')->funcion:
+    '''
+    Convierte una función matemática especificada como una cadena de texto en una instancia de la clase 'funcion'.
+
+    Parámetros:
+        f (str): La función matemática especificada como una cadena de texto.
+        var (str): La variable de la función. Por defecto es 'x'.
+
+    Excepciones:
+        No se generan excepciones.
+
+    Retorno:
+        Una instancia de la clase 'funcion' con la función especificada.
+
+    Ejemplo:
+        f = convertirFuncion("x**2 + 3*x - 2")
+    '''
+    f_ = funcion()
+    f_.setFuncion(f, var)
+    return f_
+
+def leerFuncion()->funcion:
     '''
     Lee una función matemática ingresada por el usuario y la asigna a una instancia de la clase 'funcion'.
 
@@ -89,9 +114,8 @@ def leerFuncion(f:str='')->funcion:
         f = leerFuncion()
     '''
     f_ = funcion()
-    if f == '':
-        print(text["Utilidades"]["Entrada"]["funcion_1"])
-        f = input(f'{text["Utilidades"]["Entrada"]["funcion_2"]}')
+    print(text["Utilidades"]["Entrada"]["funcion_1"])
+    f = input(f'{text["Utilidades"]["Entrada"]["funcion_2"]}')
     f_.setFuncion(f)
     return f_
     
