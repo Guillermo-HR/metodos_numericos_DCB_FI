@@ -277,6 +277,17 @@ def compararMetodos(titulo, *graficas, **configuracion):
     fig.update_layout(title=titulo, title_x=0.5, title_y=0.9, xaxis_title=eje_x, yaxis_title=eje_y, legend_title='Métodos') # ¡¡¡NO MODIFICAR!!!
 
     for g in graficas:
-        fig.add_trace(g)
-    fig.show() # ¡¡¡NO MODIFICAR!!!
+        fig.add_trace(g.data[0])
+    
     return fig
+
+def graficarTaylor(f:funcion, x:list, y:list, y_taylor:list, orden:int, polinomio:str, c:float):
+    yMax = max(y)*1.5
+    yMin = min(y)*1.5
+    titulo = f'Gráfica de la función {f.f_} y su aproximación de Taylor de orden {orden} con c={c}<br>P_{orden}(x)={polinomio}'
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y, mode='lines', line=dict(color='blue', width=2), name=f'f(x)={f.f_text}'))
+    fig.add_trace(go.Scatter(x=x, y=y_taylor, mode='lines', line=dict(color='red', width=2), name=f'P_{orden}(x)'))
+    fig.add_trace(go.Scatter(x=[c], y=[f.f(c)], mode='markers', marker=dict(color='green', size=10, symbol='diamond-open'), name=f'f(c)={round(f.f(c), 3)}'))
+    fig.update_layout(title=titulo, title_x=0.5, xaxis_title='x', yaxis_title=f'f(x)<br>P_{orden}(x)', yaxis_range=[yMin, yMax])
+    fig.show()

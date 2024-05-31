@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "metodos_numericos_DCB_FI"
-version = "0.1.9"
+version = "0.1.11"
 description = "Biblioteca con las utilidades necesarias para ejecutar los jupyter notebooks de métodos numéricos."
 authors = ["Guillermo Hernández Ruiz de Esparza <guillermo.hre@gmail.com>"]
 license = "MIT License"
